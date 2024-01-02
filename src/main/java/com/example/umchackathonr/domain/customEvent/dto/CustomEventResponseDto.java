@@ -23,4 +23,5 @@ public class CustomEventResponseDto {
         private String memo;
         private List<RecordPresentResponseDto.RecordPresentDto> recordPresents;
     }
+
 }

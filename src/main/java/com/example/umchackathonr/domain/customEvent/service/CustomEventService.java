@@ -38,7 +38,6 @@ public class CustomEventService {
 
     private final UserRepository userRepository;
     private final RecordPresentRepository recordPresentRepository;
-    private final RecordPresentService recordPresentService;
 
     public void creatCustomEvent(CustomEventRequestDto.creatCustomEventDto customEventRequestDto, Long userId) {
         Friend friendByNameAndBirthday = friendRepository.findFriendByNameAndBirthday(customEventRequestDto.getTarget(), customEventRequestDto.getDate());
@@ -58,7 +57,9 @@ public class CustomEventService {
 
     @Transactional(readOnly = true)
     public CustomEventResponseDto.readCustomDto readCustomEvent(Long userId, Long eventId) {
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findById(userId).orElseThrow(()->{
+            throw new RestApiException(UserErrorCode.INACTIVE_USER);
+        });
 
         CustomEvent customEvent = customEventRepository.findById(eventId).orElseThrow(() -> {
             throw new RestApiException(UserErrorCode.INACTIVE_CUSTOM_EVENT);
@@ -76,4 +77,14 @@ public class CustomEventService {
         return readCustomDto;
     }
 
+    @Transactional
+    public void patchMemo(Long eventId, CustomEventRequestDto.memoDto memoDto) {
+        CustomEvent customEvent = customEventRepository.findById(eventId).orElseThrow(() -> {
+            throw new RestApiException(UserErrorCode.INACTIVE_CUSTOM_EVENT);
+        });
+
+        customEvent.updateMemo(memoDto.getMemo());
+
+        customEventRepository.save(customEvent);
+    }
 }
