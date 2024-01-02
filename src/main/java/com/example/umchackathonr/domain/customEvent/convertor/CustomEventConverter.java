@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomEventConverter {
 
-
     public static CustomEvent toEntity(CustomEventRequestDto.creatCustomEventDto requestDto , Friend friend, User user) {
         return CustomEvent.builder()
                 .title(requestDto.getTitle())
@@ -19,4 +18,6 @@ public class CustomEventConverter {
                 .user(user)
                 .build();
     }
+
+
 }

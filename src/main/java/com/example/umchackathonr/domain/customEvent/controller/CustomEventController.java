@@ -1,12 +1,16 @@
 package com.example.umchackathonr.domain.customEvent.controller;
 
 import com.example.umchackathonr.domain.customEvent.dto.CustomEventRequestDto;
+import com.example.umchackathonr.domain.customEvent.dto.CustomEventResponseDto;
 import com.example.umchackathonr.domain.customEvent.service.CustomEventService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,12 +29,17 @@ public class CustomEventController {
 
     ){
         customEventService.creatCustomEvent(creatCustomEventDto ,userId);
-        return null;
+        return ResponseEntity.ok().build();
     }
 
     // 날짜별 이벤트 목록 조회
-
-
+    @GetMapping("/{userId}/event")
+    @Operation(summary = "사용자가 입력한 이벤트 목록 조회 ", description = "사용자마다 개인적인 입력한 기념일을 조회합니다.")
+    public ResponseEntity<?> getEventsByDate(
+            @PathVariable("userId") Long userId, @RequestParam("date") LocalDate date) {
+        CustomEventResponseDto.ListEventResponseDto listCustomEvent = customEventService.getListCustomEvent(date);
+        return ResponseEntity.ok(listCustomEvent);
+    }
 
     // 이벤트 상세 조회
 }
