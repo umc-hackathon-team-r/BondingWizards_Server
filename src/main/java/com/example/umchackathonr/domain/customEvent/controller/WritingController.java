@@ -1,7 +1,7 @@
-package com.example.umchackathonr.domain.event.controller;
+package com.example.umchackathonr.domain.customEvent.controller;
 
-import com.example.umchackathonr.domain.event.service.WritingService;
-import com.example.umchackathonr.domain.event.dto.WritingRequestDto;
+import com.example.umchackathonr.domain.customEvent.service.WritingService;
+import com.example.umchackathonr.domain.customEvent.dto.WritingRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.umchackathonr.domain.event.dto;
+package com.example.umchackathonr.domain.customEvent.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
