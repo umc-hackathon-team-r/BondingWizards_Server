@@ -4,6 +4,9 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.util.IOUtils;
 import com.example.umchackathonr.global.s3.dto.S3Result;
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,6 +71,20 @@ public class S3Service {
           "파일 업로드에 실패했습니다.");
     }
     return new S3Result(s3Client.getUrl(bucket, fileName).toString());
+  }
+
+  public byte[] download(String fileKey){
+    byte[] content = null;
+    final S3Object s3Object = s3Client.getObject(bucket, fileKey);
+    final S3ObjectInputStream stream = s3Object.getObjectContent();
+    try{
+      content = IOUtils.toByteArray(stream);
+      s3Object.close();
+
+    } catch (IOException e) {
+      throw new RuntimeException("IO Error Messgae =" +e.getMessage());
+    }
+    return content;
   }
 
   public String parseFileName(String url) {
