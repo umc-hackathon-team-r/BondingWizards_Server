@@ -1,6 +1,7 @@
 package com.example.umchackathonr.domain.customEvent;
 
 
+import com.example.umchackathonr.domain.customEvent.dto.CustomEventRequestDto;
 import com.example.umchackathonr.domain.friend.Friend;
 import com.example.umchackathonr.domain.user.User;
 
@@ -38,6 +39,11 @@ public class CustomEvent extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public void updateEventInformation(CustomEventRequestDto.updateCustomEventDto request) {
+        this.title = request.getTitle();
+        this.date = request.getDate();
+        this.memo = request.getMemo();
+    }
 
 
 }
