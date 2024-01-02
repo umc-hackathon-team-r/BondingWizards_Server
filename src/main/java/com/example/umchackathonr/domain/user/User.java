@@ -3,7 +3,9 @@ package com.example.umchackathonr.domain.user;
 
 import com.example.umchackathonr.domain.event.Event;
 import com.example.umchackathonr.domain.friend.Friend;
+import com.example.umchackathonr.domain.friendBirthday.FriendBirthday;
 import com.example.umchackathonr.domain.recordpresent.RecordPresent;
+import com.example.umchackathonr.domain.userEventNotification.UserEventNotification;
 import com.example.umchackathonr.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,8 +27,11 @@ public class User extends BaseTimeEntity {
     private List<Friend> friends = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Event> events = new ArrayList<>();
+    private List<RecordPresent> recordPresents = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<RecordPresent> recordPresents = new ArrayList<>();
+    private List<FriendBirthday> friendBirthdays = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<UserEventNotification> userEventNotifications = new ArrayList<>();
 }

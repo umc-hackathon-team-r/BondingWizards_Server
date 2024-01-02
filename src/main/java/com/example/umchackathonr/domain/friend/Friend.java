@@ -30,11 +30,8 @@ public class Friend extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "friend", fetch = FetchType.LAZY)
-    private List<Event> events = new ArrayList<>();
-
-    public void updateFriendInformation(String name, LocalDate birthday) {
-        this.name = name;
-        this.birthday = birthday;
-    }
+  public void updateFriendInformation(String name, LocalDate birthday) {
+    this.name = name;
+    this.birthday = birthday;
+  }
 }
