@@ -81,17 +81,17 @@ public class FCMNotificationService {
   @Scheduled(cron = "0 0 9 * * ?")
   public void sendEventNotifications(){
     LocalDate today = LocalDate.now(); // 오늘 날짜
-    List<CustomEvent> events = customEventRepository.findCustomEventByDate(today); // 오늘 날짜의 모든 일정 조회
+    List<Event> events = eventRepository.findByDate(today); // 오늘 날짜의 모든 일정 조회
 
-    for(CustomEvent event : events) {
+    for(Event event : events) {
       List<User> users = userRepository.findAll(); // 모든 유저를 조회
 
       for(User user : users) {
         if(user.getFirebaseToken() != null) {
           FCMNotificationRequestDto requestDto = new FCMNotificationRequestDto();
           requestDto.setTargetUserId(user.getId());
-          requestDto.setTitle("오늘의 일정 알림");
-          requestDto.setBody(event.getTitle()); // 일정의 제목을 알림 내용으로 설정
+          requestDto.setTitle("기념일 알림");
+          requestDto.setBody(event.getNotification()); // 일정의 제목을 알림 내용으로 설정
 
           sendNotificationByToken(requestDto); // 각 유저에게 알림을 보냄
         }
@@ -103,17 +103,17 @@ public class FCMNotificationService {
   @Scheduled(cron = "0 0 9 * * ?")
   public void sendCustomEventNotifications(){
     LocalDate today = LocalDate.now(); // 오늘 날짜
-    List<Event> events = eventRepository.findByDate(today); // 오늘 날짜의 모든 일정 조회
+    List<CustomEvent> events = customEventRepository.findCustomEventByDate(today); // 오늘 날짜의 모든 일정 조회
 
-    for(Event event : events) {
+    for(CustomEvent event : events) {
       List<User> users = userRepository.findAll(); // 모든 유저를 조회
 
       for(User user : users) {
         if(user.getFirebaseToken() != null) {
           FCMNotificationRequestDto requestDto = new FCMNotificationRequestDto();
           requestDto.setTargetUserId(user.getId());
-          requestDto.setTitle("오늘의 일정 알림");
-          requestDto.setBody(event.getTitle()); // 일정의 제목을 알림 내용으로 설정
+          requestDto.setTitle("오늘은");
+          requestDto.setBody(event.getTitle()+"입니다. 축하의 메시지와 선물을 보내보세요!"); // 일정의 제목을 알림 내용으로 설정
 
           sendNotificationByToken(requestDto); // 각 유저에게 알림을 보냄
         }
