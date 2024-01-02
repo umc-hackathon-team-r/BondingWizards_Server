@@ -15,12 +15,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class RecordPresentService {
 
     private final RecordPresentRepository recordPresentRepository;
 
     private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     public RecordPresentResponseDto.RecordPresentDto readRecordPresent(Long id) {
 
         RecordPresent recordPresent = recordPresentRepository.findById(id).orElseThrow(() -> {
@@ -30,6 +32,7 @@ public class RecordPresentService {
         return RecordPresentConverter.toRecordPresentDto(recordPresent);
     }
 
+    @Transactional(readOnly = true)
     public RecordPresentResponseDto.RecordPresentListDto readRecordAllPresent(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> {
             throw new RestApiException(UserErrorCode.INACTIVE_USER);
@@ -49,4 +52,35 @@ public class RecordPresentService {
 
         return recordPresent2.getId();
     }
+
+    public void deletePresent(Long id) {
+        RecordPresent recordPresent = recordPresentRepository.findById(id).orElseThrow(() -> {
+            throw new RestApiException(UserErrorCode.INACTIVE_PRESENT);
+        });
+        recordPresentRepository.delete(recordPresent);
+    }
+
+    public RecordPresentResponseDto.RecordPresentDto updatePresent(Long id, RecordPresentRequestDto.RecordPresentUpdateReq recordPresentUpdateReq) {
+
+        RecordPresent recordPresent = recordPresentRepository.findById(id).orElseThrow(() -> {
+            throw new RestApiException(UserErrorCode.INACTIVE_PRESENT);
+        });
+
+        RecordPresent r = RecordPresent.builder()
+                            .title(recordPresentUpdateReq.getTitle())
+                            .id(recordPresent.getId())
+                            .description(recordPresentUpdateReq.getDescription())
+                            .price(recordPresentUpdateReq.getPrice())
+                            .picture(recordPresentUpdateReq.getPicture())
+                            .name(recordPresentUpdateReq.getName())
+                            .category(recordPresentUpdateReq.getCategory())
+                            .user(recordPresent.getUser())
+                            .build();
+
+        recordPresentRepository.save(r);
+
+        return RecordPresentConverter.toRecordPresentDto(recordPresent);
+    }
+
+
 }
