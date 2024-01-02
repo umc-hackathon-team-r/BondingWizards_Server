@@ -1,14 +1,37 @@
 package com.example.umchackathonr.domain.customEvent.dto;
 
-import com.example.umchackathonr.domain.Event.Event;
-import com.example.umchackathonr.domain.customEvent.CustomEvent;
+import com.example.umchackathonr.domain.recordpresent.RecordPresent;
+import com.example.umchackathonr.domain.recordpresent.dto.RecordPresentResponseDto;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import com.example.umchackathonr.domain.Event.Event;
+import com.example.umchackathonr.domain.customEvent.CustomEvent;
 import lombok.Setter;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+public class CustomEventResponseDto {
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class readCustomDto{
+
+        private String title;
+        private LocalDate date;
+        private String memo;
+        private List<RecordPresentResponseDto.RecordPresentDto> recordPresents;
+    }
+
+}
 
 public class CustomEventResponseDto {
 
@@ -42,3 +65,4 @@ public class CustomEventResponseDto {
     }
 
 }
+

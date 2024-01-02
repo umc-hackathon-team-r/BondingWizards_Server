@@ -27,6 +27,15 @@ public class CustomEventRequestDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
+    public static class memoDto {
+        @Schema(description = "메모", example = "메모 수정 및 작성")
+        private String memo;
+    }
+    
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class updateCustomEventDto {
         @Schema(description = "이벤트 제목", example = "맹구 생일")
         private String title;

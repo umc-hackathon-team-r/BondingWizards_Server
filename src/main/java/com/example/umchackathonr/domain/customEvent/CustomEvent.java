@@ -39,6 +39,11 @@ public class CustomEvent extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+
+    public void updateMemo(String memo) {
+        this.memo = memo;
+    }
+
     public void updateEventInformation(CustomEventRequestDto.updateCustomEventDto request) {
         this.title = request.getTitle();
         this.date = request.getDate();

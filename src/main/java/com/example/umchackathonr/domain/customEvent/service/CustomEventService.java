@@ -11,14 +11,23 @@ import com.example.umchackathonr.domain.friend.Friend;
 import com.example.umchackathonr.domain.friend.FriendRepository;
 import com.example.umchackathonr.domain.friend.FriendService;
 import com.example.umchackathonr.domain.friend.dto.FriendRequest;
+import com.example.umchackathonr.domain.recordpresent.RecordPresent;
+import com.example.umchackathonr.domain.recordpresent.RecordPresentRepository;
+import com.example.umchackathonr.domain.recordpresent.RecordPresentService;
+import com.example.umchackathonr.domain.recordpresent.converter.RecordPresentConverter;
+import com.example.umchackathonr.domain.recordpresent.dto.RecordPresentResponseDto;
 import com.example.umchackathonr.domain.user.User;
 import com.example.umchackathonr.domain.user.UserRepository;
 import com.example.umchackathonr.exception.errorCode.UserErrorCode;
 import com.example.umchackathonr.exception.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+
 
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +45,10 @@ public class CustomEventService {
 
   private final UserRepository userRepository;
   private final EventRepository eventRepository;
+
+
+    private final UserRepository userRepository;
+    private final RecordPresentRepository recordPresentRepository;
 
 
     public void creatCustomEvent(CustomEventRequestDto.creatCustomEventDto customEventRequestDto, Long userId) {
@@ -80,6 +93,40 @@ public class CustomEventService {
     }
 
 
+    @Transactional(readOnly = true)
+    public CustomEventResponseDto.readCustomDto readCustomEvent(Long userId, Long eventId) {
+        User user = userRepository.findById(userId).orElseThrow(()->{
+            throw new RestApiException(UserErrorCode.INACTIVE_USER);
+        });
+
+        CustomEvent customEvent = customEventRepository.findById(eventId).orElseThrow(() -> {
+            throw new RestApiException(UserErrorCode.INACTIVE_CUSTOM_EVENT);
+        });
+
+        List<RecordPresent> recordPresents = recordPresentRepository.findAllByUser(user);
+        List<RecordPresentResponseDto.RecordPresentDto> recordPresentDtos = new ArrayList<>();
+
+        for(RecordPresent r : recordPresents) {
+            recordPresentDtos.add(RecordPresentConverter.toRecordPresentDto(r));
+        }
+
+        CustomEventResponseDto.readCustomDto readCustomDto = CustomEventConverter.toReadCustomDto(customEvent, recordPresentDtos);
+        
+        return readCustomDto;
+    }
+
+    @Transactional
+    public void patchMemo(Long eventId, CustomEventRequestDto.memoDto memoDto) {
+        CustomEvent customEvent = customEventRepository.findById(eventId).orElseThrow(() -> {
+            throw new RestApiException(UserErrorCode.INACTIVE_CUSTOM_EVENT);
+        });
+
+        customEvent.updateMemo(memoDto.getMemo());
+
+        customEventRepository.save(customEvent);
+    }
+
+
   // 이벤트 수정
   public void update(CustomEventRequestDto.updateCustomEventDto request, Long eventId) {
     CustomEvent customEvent = customEventRepository.findById(eventId)
@@ -97,5 +144,6 @@ public class CustomEventService {
 
     customEventRepository.deleteById(eventId);
   }
+
 }
 
