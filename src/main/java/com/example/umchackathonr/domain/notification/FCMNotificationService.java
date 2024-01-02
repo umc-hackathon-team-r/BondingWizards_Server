@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class FCMNotificationService {
   private final UserRepository userRepository;
   private final EventRepository eventRepository;
   private final CustomEventRepository customEventRepository;
-  public String sendNotificationByToken(FCMNotificationRequestDto requestDto){
+  public ResponseEntity<String> sendNotificationByToken(FCMNotificationRequestDto requestDto){
     Optional<User> user = userRepository.findById(requestDto.getTargetUserId());
 
     if(user.isPresent()){
@@ -43,18 +44,18 @@ public class FCMNotificationService {
 
         try{
           firebaseMessaging.send(message);
-          return "알림을 성공적으로 전송했습니다. targetUserId=" + requestDto.getTargetUserId();
+          return ResponseEntity.ok("알림을 성공적으로 전송했습니다. targetUserId=" + requestDto.getTargetUserId());
         } catch (FirebaseMessagingException e){
           e.printStackTrace();
-          return "알림 보내기를 실패하였습니다. targetUserId=" + requestDto.getTargetUserId();
+          return ResponseEntity.badRequest().body("알림 보내기를 실패하였습니다. targetUserId=" + requestDto.getTargetUserId());
         }
 
       } else {
-        return "서버에 저장된 해당 유저의 FirebaseToken이 존재하지 않습니다. targetUserId="
-            + requestDto.getTargetUserId();
+        return ResponseEntity.badRequest().body("서버에 저장된 해당 유저의 FirebaseToken이 존재하지 않습니다. targetUserId="
+            + requestDto.getTargetUserId());
       }
     } else {
-      return "해당 유저가 존재하지 않습니다. targetUserId-" + requestDto.getTargetUserId();
+      return ResponseEntity.badRequest().body("해당 유저가 존재하지 않습니다. targetUserId-" + requestDto.getTargetUserId());
     }
   }
 
