@@ -23,9 +23,9 @@ public class RecordPresentController {
         return ResponseEntity.ok(r);
     }
 
-    @GetMapping("/present")
-    public ResponseEntity<RecordPresentResponseDto.RecordPresentListDto> readAllRecordPresent() {
-        RecordPresentResponseDto.RecordPresentListDto list = recordPresentService.readRecordAllPresent();
+    @GetMapping("/{userId}/present")
+    public ResponseEntity<RecordPresentResponseDto.RecordPresentListDto> readAllRecordPresent(@PathVariable Long userId) {
+        RecordPresentResponseDto.RecordPresentListDto list = recordPresentService.readRecordAllPresent(userId);
         return ResponseEntity.ok(list);
     }
 }

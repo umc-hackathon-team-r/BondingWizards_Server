@@ -2,6 +2,7 @@ package com.example.umchackathonr.domain.recordpresent;
 
 import com.example.umchackathonr.domain.recordpresent.converter.RecordPresentConverter;
 import com.example.umchackathonr.domain.recordpresent.dto.RecordPresentResponseDto;
+import com.example.umchackathonr.domain.user.User;
 import com.example.umchackathonr.exception.errorCode.UserErrorCode;
 import com.example.umchackathonr.exception.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,9 @@ public class RecordPresentService {
         return RecordPresentConverter.toRecordPresentDto(recordPresent);
     }
 
-    public RecordPresentResponseDto.RecordPresentListDto readRecordAllPresent() {
-        List<RecordPresent> recordPresents = recordPresentRepository.findAll();
+    public RecordPresentResponseDto.RecordPresentListDto readRecordAllPresent(Long userId) {
+        User user = new User();
+        List<RecordPresent> recordPresents = recordPresentRepository.findAllByUser(user);
         return RecordPresentConverter.toRecordPresentListDto(recordPresents);
     }
 }
