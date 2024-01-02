@@ -2,6 +2,7 @@
 spring:
   profiles:
     include: local
+    active: secreat
   datasource:
     # RDS-mysql-db-test
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -29,4 +30,4 @@ cloud:
     stack:
       auto: false
 chatgpt:
-  api-key: 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
+  api-key: ${openai.api.key}

@@ -6,6 +6,8 @@ import io.github.flashvayne.chatgpt.service.ChatgptService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class WritingService {
@@ -14,8 +16,25 @@ public class WritingService {
     private final ChatgptService chatgptService;
 
     public WritingResponseDto getGhatGptWrite(WritingRequestDto writingRequestDto){
-        String prompt = writingRequestDto.getGoal()+"에 보내기 위한"+ writingRequestDto.getPropensity() + "성향을 반영해서 글을 추천해줘";
-        String message = chatgptService.sendMessage(prompt);
-        return new WritingResponseDto(message);
+
+        String propensity = removeBrackets(writingRequestDto.getPropensity());
+        String prompt = writingRequestDto.getGoal()+"에 보내야 할 글인데 "+ propensity + "특성을 반영해서 글을 추천해줘";
+        // 실제 chatGPT api인데 횟수 제한이 있어서 주석해놓았습니다.
+        // String message = chatgptService.sendMessage(prompt);
+        return new WritingResponseDto(prompt);
+    }
+
+    private String removeBrackets(List<String> propensity) {
+        StringBuilder result = new StringBuilder();
+        for (String prop : propensity) {
+            result.append(prop).append(", ");
+        }
+
+        // Remove the trailing comma and space
+        if (result.length() > 1) {
+            result.setLength(result.length() - 2);
+        }
+
+        return result.toString();
     }
 }
