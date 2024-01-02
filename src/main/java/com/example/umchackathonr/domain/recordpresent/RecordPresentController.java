@@ -1,12 +1,10 @@
 package com.example.umchackathonr.domain.recordpresent;
 
+import com.example.umchackathonr.domain.recordpresent.dto.RecordPresentRequestDto;
 import com.example.umchackathonr.domain.recordpresent.dto.RecordPresentResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +25,11 @@ public class RecordPresentController {
     public ResponseEntity<RecordPresentResponseDto.RecordPresentListDto> readAllRecordPresent(@PathVariable Long userId) {
         RecordPresentResponseDto.RecordPresentListDto list = recordPresentService.readRecordAllPresent(userId);
         return ResponseEntity.ok(list);
+    }
+
+    @PostMapping("/present")
+    public ResponseEntity<Long> createPresent(@RequestBody RecordPresentRequestDto.RecordPresentAddReq recordPresentAddReq) {
+        Long record_present_id = recordPresentService.createPresent(recordPresentAddReq);
+        return ResponseEntity.ok(record_present_id);
     }
 }

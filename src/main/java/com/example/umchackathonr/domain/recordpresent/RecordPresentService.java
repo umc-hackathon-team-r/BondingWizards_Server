@@ -1,6 +1,7 @@
 package com.example.umchackathonr.domain.recordpresent;
 
 import com.example.umchackathonr.domain.recordpresent.converter.RecordPresentConverter;
+import com.example.umchackathonr.domain.recordpresent.dto.RecordPresentRequestDto;
 import com.example.umchackathonr.domain.recordpresent.dto.RecordPresentResponseDto;
 import com.example.umchackathonr.domain.user.User;
 import com.example.umchackathonr.domain.user.UserRepository;
@@ -36,5 +37,16 @@ public class RecordPresentService {
 
         List<RecordPresent> recordPresents = recordPresentRepository.findAllByUser(user);
         return RecordPresentConverter.toRecordPresentListDto(recordPresents);
+    }
+
+    public Long createPresent(RecordPresentRequestDto.RecordPresentAddReq recordReq) {
+        User user = userRepository.findById(recordReq.getUserId()).orElseThrow(() -> {
+            throw new RestApiException(UserErrorCode.INACTIVE_USER);
+        });
+        RecordPresent recordPresent = RecordPresentConverter.toRecordPresent(recordReq);
+        recordPresent.addUser(user);
+        RecordPresent recordPresent2 = recordPresentRepository.save(recordPresent);
+
+        return recordPresent2.getId();
     }
 }
