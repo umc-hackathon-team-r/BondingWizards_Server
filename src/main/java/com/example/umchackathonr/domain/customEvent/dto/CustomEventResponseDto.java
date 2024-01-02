@@ -31,10 +31,6 @@ public class CustomEventResponseDto {
         private List<RecordPresentResponseDto.RecordPresentDto> recordPresents;
     }
 
-}
-
-public class CustomEventResponseDto {
-
     // 목록 조회
     @NoArgsConstructor
     @AllArgsConstructor
