@@ -2,6 +2,8 @@ package com.example.umchackathonr.domain.notification;
 
 import com.example.umchackathonr.domain.Event.Event;
 import com.example.umchackathonr.domain.Event.EventRepository;
+import com.example.umchackathonr.domain.customEvent.CustomEvent;
+import com.example.umchackathonr.domain.customEvent.repository.CustomEventRepository;
 import com.example.umchackathonr.domain.notification.dto.FCMNotificationRequestDto;
 import com.example.umchackathonr.domain.user.User;
 import com.example.umchackathonr.domain.user.UserRepository;
@@ -23,7 +25,7 @@ public class FCMNotificationService {
   private final FirebaseMessaging firebaseMessaging;
   private final UserRepository userRepository;
   private final EventRepository eventRepository;
-
+  private final CustomEventRepository customEventRepository;
   public String sendNotificationByToken(FCMNotificationRequestDto requestDto){
     Optional<User> user = userRepository.findById(requestDto.getTargetUserId());
 
@@ -77,6 +79,28 @@ public class FCMNotificationService {
   @Scheduled(cron = "0 0 9 * * ?")
   public void sendEventNotifications(){
     LocalDate today = LocalDate.now(); // 오늘 날짜
+    List<CustomEvent> events = customEventRepository.findCustomEventByDate(today); // 오늘 날짜의 모든 일정 조회
+
+    for(CustomEvent event : events) {
+      List<User> users = userRepository.findAll(); // 모든 유저를 조회
+
+      for(User user : users) {
+        if(user.getFirebaseToken() != null) {
+          FCMNotificationRequestDto requestDto = new FCMNotificationRequestDto();
+          requestDto.setTargetUserId(user.getId());
+          requestDto.setTitle("오늘의 일정 알림");
+          requestDto.setBody(event.getTitle()); // 일정의 제목을 알림 내용으로 설정
+
+          sendNotificationByToken(requestDto); // 각 유저에게 알림을 보냄
+        }
+      }
+    }
+  }
+
+  //Customevent 알림 송신
+  @Scheduled(cron = "0 0 9 * * ?")
+  public void sendCustomEventNotifications(){
+    LocalDate today = LocalDate.now(); // 오늘 날짜
     List<Event> events = eventRepository.findByDate(today); // 오늘 날짜의 모든 일정 조회
 
     for(Event event : events) {
@@ -85,7 +109,7 @@ public class FCMNotificationService {
       for(User user : users) {
         if(user.getFirebaseToken() != null) {
           FCMNotificationRequestDto requestDto = new FCMNotificationRequestDto();
-          requestDto.setTargetUserId(user.getId()); // User 클래스에 getId() 메소드가 있다고 가정
+          requestDto.setTargetUserId(user.getId());
           requestDto.setTitle("오늘의 일정 알림");
           requestDto.setBody(event.getTitle()); // 일정의 제목을 알림 내용으로 설정
 
