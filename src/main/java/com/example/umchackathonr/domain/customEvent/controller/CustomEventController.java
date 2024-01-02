@@ -34,7 +34,7 @@ public class CustomEventController {
 
     // 날짜별 이벤트 목록 조회
     @GetMapping("/{userId}/event")
-    @Operation(summary = "사용자가 입력한 이벤트 목록 조회 ", description = "사용자마다 개인적인 입력한 기념일을 조회합니다.")
+    @Operation(summary = "이벤트 목록 조회 ", description = "모든 기념일을 조회합니다.")
     public ResponseEntity<?> getEventsByDate(
             @PathVariable("userId") Long userId, @RequestParam("date") LocalDate date) {
         CustomEventResponseDto.ListEventResponseDto listCustomEvent = customEventService.getListCustomEvent(date);
