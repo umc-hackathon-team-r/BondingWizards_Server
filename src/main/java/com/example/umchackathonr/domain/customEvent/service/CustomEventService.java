@@ -46,9 +46,7 @@ public class CustomEventService {
   private final UserRepository userRepository;
   private final EventRepository eventRepository;
 
-
-    private final UserRepository userRepository;
-    private final RecordPresentRepository recordPresentRepository;
+  private final RecordPresentRepository recordPresentRepository;
 
 
     public void creatCustomEvent(CustomEventRequestDto.creatCustomEventDto customEventRequestDto, Long userId) {
