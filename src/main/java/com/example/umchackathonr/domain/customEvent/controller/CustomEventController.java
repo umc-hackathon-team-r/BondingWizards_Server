@@ -51,7 +51,7 @@ public class CustomEventController {
   // 이벤트 상세 조회
 
   // 이벤트 수정
-  @PatchMapping("/api/event/{eventId}")
+  @PatchMapping("/event/{eventId}")
   @Operation(summary = "이벤트 수정", description = "이벤트 정보를 수정합니다.")
   @ApiResponse(responseCode = "201", description = "이벤트 수정 성공", content = {
       @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
@@ -72,7 +72,7 @@ public class CustomEventController {
 
 
   // 이벤트 삭제
-  @DeleteMapping("/api/event/{eventId}")
+  @DeleteMapping("/event/{eventId}")
   @Operation(summary = "이벤트 삭제", description = "이벤트 정보를 삭제합니다.")
   @ApiResponse(responseCode = "201", description = "이벤트 삭제 성공", content = {
       @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
