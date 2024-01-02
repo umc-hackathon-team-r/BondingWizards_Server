@@ -14,7 +14,7 @@ public class FCMNotificationApiController {
 
   private final FCMNotificationService fcmNotificationService;
 
-  @PostMapping()
+  @PostMapping("now")
   public String sendNotificationByToken(@RequestBody FCMNotificationRequestDto requestDto){
     return fcmNotificationService.sendNotificationByToken(requestDto);
   }
