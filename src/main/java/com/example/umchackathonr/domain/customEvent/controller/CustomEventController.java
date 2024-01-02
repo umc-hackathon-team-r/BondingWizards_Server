@@ -69,4 +69,25 @@ public class CustomEventController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(response);
     }
+
+
+    // 이벤트 삭제
+    @DeleteMapping("/api/event/{eventId}")
+    @Operation(summary = "이벤트 삭제", description = "이벤트 정보를 삭제합니다.")
+    @ApiResponse(responseCode = "201", description = "이벤트 삭제 성공", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+    })
+    @ApiResponse(responseCode = "403", description = "존재하지 않는 이벤트 ID입니다.")
+    @ApiResponse(responseCode = "500", description = "서버 내 오류")
+    public ResponseEntity<Map<String, String>> deleteEvent(
+            @PathVariable Long eventId) {
+
+        customEventService.delete(eventId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "삭제 완료");
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(response);
+    }
 }
