@@ -17,3 +17,14 @@ spring:
         format_sql: true
 server:
   port: 8080
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAQ3YDMOPJVVZA247R
+      secretKey: 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
+    s3:
+      bucket: bondingwizards-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
