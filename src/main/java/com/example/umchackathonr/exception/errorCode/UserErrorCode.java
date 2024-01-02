@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 public enum UserErrorCode implements ErrorCode{
 
     // 추가할 에러
-    INACTIVE_USER(HttpStatus.FORBIDDEN, "User is inactive");
+    INACTIVE_USER(HttpStatus.FORBIDDEN, "User is inactive"),
+    // 추가할 에러
+    INACTIVE_PRESENT(HttpStatus.NOT_FOUND, "존재하지 않는 선물입니다.");
 
 
 
