@@ -1,5 +1,7 @@
 package com.example.umchackathonr.controller;
 
+import com.example.umchackathonr.exception.errorCode.UserErrorCode;
+import com.example.umchackathonr.exception.exception.RestApiException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ public class TestController {
     @GetMapping(value = "/health-check")
     @Operation(summary = "요약", description = "API 설명 작성해주게요")
     public ResponseEntity<?> healthcheck(){
-        return ResponseEntity.ok().build();
+        throw new RestApiException(UserErrorCode.INACTIVE_USER);
     }
 
 }
