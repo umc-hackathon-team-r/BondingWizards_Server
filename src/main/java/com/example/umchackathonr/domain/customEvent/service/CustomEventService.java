@@ -27,6 +27,7 @@ public class CustomEventService {
 
     private final CustomEventRepository customEventRepository;
     private final CustomEventConverter customEventConverter;
+    private final FriendService friendService;
 
     private final FriendRepository friendRepository;
 
@@ -56,5 +57,16 @@ public class CustomEventService {
 
         return new CustomEventResponseDto.ListEventResponseDto(eventResponseDtos);
     }
+
+    // 이벤트 수정
+    public void update(CustomEventRequestDto.updateCustomEventDto request, Long eventId) {
+        CustomEvent customEvent = customEventRepository.findById(eventId)
+                .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_EVENT));
+
+        customEvent.updateEventInformation(request);
+
+        customEventRepository.save(customEvent);
+    }
+
 
 }
