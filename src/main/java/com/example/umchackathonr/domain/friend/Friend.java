@@ -2,7 +2,7 @@ package com.example.umchackathonr.domain.friend;
 
 
 import com.example.umchackathonr.domain.user.User;
-import com.example.umchackathonr.domain.event.Event;
+import com.example.umchackathonr.domain.customEvent.CustomEvent;
 import com.example.umchackathonr.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,8 +30,14 @@ public class Friend extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-  public void updateFriendInformation(String name, LocalDate birthday) {
-    this.name = name;
-    this.birthday = birthday;
-  }
+    @OneToMany(mappedBy = "friend", fetch = FetchType.LAZY)
+    private List<CustomEvent> events = new ArrayList<>();
+
+    public void updateFriendInformation(String name, LocalDate birthday) {
+        this.name = name;
+        this.birthday = birthday;
+    }
+
 }
+
+

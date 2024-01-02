@@ -1,6 +1,7 @@
 package com.example.umchackathonr.domain.userEventNotification;
 
-import com.example.umchackathonr.domain.event.Event;
+
+import com.example.umchackathonr.domain.Event.Event;
 import com.example.umchackathonr.domain.user.User;
 import com.example.umchackathonr.global.common.BaseTimeEntity;
 import jakarta.persistence.Column;

@@ -1,7 +1,7 @@
-package com.example.umchackathonr.domain.event.service;
+package com.example.umchackathonr.domain.customEvent.service;
 
-import com.example.umchackathonr.domain.event.dto.WritingRequestDto;
-import com.example.umchackathonr.domain.event.dto.WritingResponseDto;
+import com.example.umchackathonr.domain.customEvent.dto.WritingRequestDto;
+import com.example.umchackathonr.domain.customEvent.dto.WritingResponseDto;
 import io.github.flashvayne.chatgpt.service.ChatgptService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

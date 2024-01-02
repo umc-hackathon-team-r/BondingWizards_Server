@@ -1,7 +1,7 @@
 package com.example.umchackathonr.domain.user;
 
 
-import com.example.umchackathonr.domain.event.Event;
+import com.example.umchackathonr.domain.customEvent.CustomEvent;
 import com.example.umchackathonr.domain.friend.Friend;
 import com.example.umchackathonr.domain.friendBirthday.FriendBirthday;
 import com.example.umchackathonr.domain.recordpresent.RecordPresent;
@@ -29,7 +29,11 @@ public class User extends BaseTimeEntity {
     private List<Friend> friends = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
+
+    private List<CustomEvent> events = new ArrayList<>();
+
     private List<RecordPresent> recordPresents = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "user")
     private List<FriendBirthday> friendBirthdays = new ArrayList<>();
