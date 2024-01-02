@@ -32,8 +32,6 @@ public class CustomEventService {
 
     private final FriendRepository friendRepository;
 
-    private final FriendService friendService;
-
     private final UserRepository userRepository;
 
     public void creatCustomEvent(CustomEventRequestDto.creatCustomEventDto customEventRequestDto, Long userId) {
@@ -71,5 +69,11 @@ public class CustomEventService {
         customEventRepository.save(customEvent);
     }
 
+    // 이벤트 삭제
+    public void delete(Long eventId) {
+        customEventRepository.findById(eventId)
+                .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_EVENT));
 
+        customEventRepository.deleteById(eventId);
+    }
 }
