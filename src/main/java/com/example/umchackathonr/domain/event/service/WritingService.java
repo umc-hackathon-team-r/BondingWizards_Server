@@ -18,10 +18,10 @@ public class WritingService {
     public WritingResponseDto getGhatGptWrite(WritingRequestDto writingRequestDto){
 
         String propensity = removeBrackets(writingRequestDto.getPropensity());
-        String prompt = writingRequestDto.getGoal()+"에 보내야 할 글인데 "+ propensity + "특성을 반영해서 글을 추천해줘";
+        String prompt = writingRequestDto.getGoal()+"에 보내야 할 글인데 "+ propensity + "특성을 반영해서 짧은 글을 추천해줘";
         // 실제 chatGPT api인데 횟수 제한이 있어서 주석해놓았습니다.
-        // String message = chatgptService.sendMessage(prompt);
-        return new WritingResponseDto(prompt);
+         String message = chatgptService.sendMessage(prompt);
+        return new WritingResponseDto(message);
     }
 
     private String removeBrackets(List<String> propensity) {
