@@ -4,6 +4,8 @@ import com.example.umchackathonr.domain.customEvent.dto.CustomEventRequestDto;
 import com.example.umchackathonr.domain.customEvent.dto.CustomEventResponseDto;
 import com.example.umchackathonr.domain.customEvent.service.CustomEventService;
 
+import com.example.umchackathonr.domain.friend.dto.CreateFriendResponse;
+import com.example.umchackathonr.domain.friend.dto.FriendResponse;
 import com.example.umchackathonr.domain.recordpresent.dto.RecordPresentResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,6 +36,10 @@ public class CustomEventController {
     // 이벤트 생성
     @PostMapping("/{userId}/event")
     @Operation(summary = "사용자 입력 이벤트 ", description = "사용자마다 개인적인 기념일을 입력합니다.")
+    @ApiResponse(responseCode = "201", description = "이벤트 생성 성공", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = CustomEventResponseDto.CreateCustomEventResponse.class))
+    })
+    @ApiResponse(responseCode = "403", description = "없는 유저입니다.")
     public ResponseEntity<?> creatCustomEvent
     (@RequestBody CustomEventRequestDto.creatCustomEventDto creatCustomEventDto,
      @RequestParam (defaultValue = "1") Long userId
@@ -47,6 +53,10 @@ public class CustomEventController {
     // 날짜별 이벤트 목록 조회
     @GetMapping("/{userId}/event")
     @Operation(summary = "이벤트 목록 조회 ", description = "모든 기념일을 조회합니다.")
+    @ApiResponse(responseCode = "201", description = "이벤트 목록 조회 성공", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = CustomEventResponseDto.ListEventResponseDto.class))
+    })
+    @ApiResponse(responseCode = "403", description = "없는 유저입니다.")
     public ResponseEntity<?> getEventsByDate(
             @PathVariable("userId") Long userId, @RequestParam("date") LocalDate date) {
         CustomEventResponseDto.ListEventResponseDto listCustomEvent = customEventService.getListCustomEvent(date,userId);

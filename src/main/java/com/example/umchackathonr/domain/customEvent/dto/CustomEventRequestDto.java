@@ -16,9 +16,16 @@ public class CustomEventRequestDto {
     @AllArgsConstructor
     @Builder
     public static class creatCustomEventDto {
+        @Schema(description = "이벤트 제목", example = "맹구 생일")
         private String title;
+
+        @Schema(description = "이벤트 날짜", example = "2024-01-03")
         private LocalDate date;
+
+        @Schema(description = "이벤트 메모", example = "저번 생일 못 챙겨줬으니까 비싼거 사주기")
         private String memo;
+
+        @Schema(description = "대상", example = "유리")
         private String target;
 
     }
