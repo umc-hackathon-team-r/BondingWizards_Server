@@ -13,7 +13,6 @@ import com.example.umchackathonr.domain.friend.FriendService;
 import com.example.umchackathonr.domain.friend.dto.FriendRequest;
 import com.example.umchackathonr.domain.recordpresent.RecordPresent;
 import com.example.umchackathonr.domain.recordpresent.RecordPresentRepository;
-import com.example.umchackathonr.domain.recordpresent.RecordPresentService;
 import com.example.umchackathonr.domain.recordpresent.converter.RecordPresentConverter;
 import com.example.umchackathonr.domain.recordpresent.dto.RecordPresentResponseDto;
 import com.example.umchackathonr.domain.user.User;
@@ -24,13 +23,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 import java.time.LocalDate;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,9 +45,9 @@ public class CustomEventService {
   private final RecordPresentRepository recordPresentRepository;
 
 
-    public void creatCustomEvent(CustomEventRequestDto.creatCustomEventDto customEventRequestDto, Long userId) {
-        Friend friendByNameAndBirthday = friendRepository.findFriendByNameAndBirthday(customEventRequestDto.getTarget(), customEventRequestDto.getDate());
 
+    public Long creatCustomEvent(CustomEventRequestDto.creatCustomEventDto customEventRequestDto, Long userId) {
+        Friend friendByNameAndBirthday = friendRepository.findFriendByNameAndBirthday(customEventRequestDto.getTarget(), customEventRequestDto.getDate());
         if (friendByNameAndBirthday == null) {
             FriendRequest request = FriendRequest.builder()
                     .name(customEventRequestDto.getTarget())
@@ -62,26 +58,42 @@ public class CustomEventService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_USER));
         CustomEvent customEvent = customEventConverter.toEntity(customEventRequestDto, friendByNameAndBirthday, user);
-        customEventRepository.save(customEvent);
-  }
+        CustomEvent saveCustomEvent = customEventRepository.save(customEvent);
+        return saveCustomEvent.getId();
+    }
 
-
-    public CustomEventResponseDto.ListEventResponseDto getListCustomEvent(LocalDate date) {
-        List<CustomEvent> customEvent = customEventRepository.findCustomEventByDate(date);
+    // 날짜별 이벤트 목록 조회
+    public CustomEventResponseDto.ListEventResponseDto getListCustomEvent(LocalDate date, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_USER));
+        List<CustomEvent> customEvent = customEventRepository.findCustomEventByDateAndUser(date,user);
         Event event = eventRepository.findEventByDate(date);
+
+        // 이벤트가 없을 경우
+        if (customEvent.isEmpty() && event == null) {
+            List<CustomEventResponseDto.CommonEventDto> noEventDto = Collections.singletonList(
+                    new CustomEventResponseDto.CommonEventDto("일정이 없습니다")
+            );
+            return new CustomEventResponseDto.ListEventResponseDto(noEventDto);
+        }
+
         mergeEvent(customEvent,event);
-
         List<CustomEventResponseDto.CommonEventDto> mergedEventDtos = mergeEvent(customEvent, event);
-
         return new CustomEventResponseDto.ListEventResponseDto(mergedEventDtos);
     }
 
     // 사용자 입력 이벤트와 자동 생성 Event 병합 코드
     public List<CustomEventResponseDto.CommonEventDto> mergeEvent(List<CustomEvent> customEvents, Event event) {
         List<CustomEventResponseDto.CommonEventDto> commonEventDtos = new ArrayList<>();
-        commonEventDtos.add(CustomEventResponseDto.CommonEventDto.fromEvent(event));
 
+        // Event가 null이 아닌 경우에만 추가
+        if (event != null) {
+            commonEventDtos.add(CustomEventResponseDto.CommonEventDto.fromEvent(event));
+        }
+
+        // CustomEvent 중 null이 아닌 것들을 CommonEventDto로 변환하여 추가
         List<CustomEventResponseDto.CommonEventDto> customEventDtos = customEvents.stream()
+                .filter(ce -> ce != null) // null인 CustomEvent는 필터링
                 .map(CustomEventResponseDto.CommonEventDto::fromCustomEvent)
                 .collect(Collectors.toList());
 
