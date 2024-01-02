@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@Tag(name = "S3 API", description = "S3 파일 업로드 + {domain}-Service API")
+@Tag(name = "S3 API", description = "S3 파일 업로드")
 @RequestMapping("")
 @RequiredArgsConstructor
 public class S3Controller {
