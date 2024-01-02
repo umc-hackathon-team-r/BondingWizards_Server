@@ -1,5 +1,6 @@
 package com.example.umchackathonr.domain.customEvent.service;
 
+import com.example.umchackathonr.domain.Event.Event;
 import com.example.umchackathonr.domain.customEvent.CustomEvent;
 import com.example.umchackathonr.domain.customEvent.convertor.CustomEventConverter;
 import com.example.umchackathonr.domain.customEvent.dto.CustomEventRequestDto;
@@ -30,6 +31,8 @@ public class CustomEventService {
     private final FriendService friendService;
 
     private final FriendRepository friendRepository;
+
+    private final FriendService friendService;
 
     private final UserRepository userRepository;
 
