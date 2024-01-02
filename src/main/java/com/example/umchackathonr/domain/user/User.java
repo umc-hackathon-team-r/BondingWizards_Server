@@ -23,6 +23,8 @@ public class User extends BaseTimeEntity {
 
     private String name;
 
+    private String firebaseToken;
+
     @OneToMany(mappedBy = "user")
     private List<Friend> friends = new ArrayList<>();
 
