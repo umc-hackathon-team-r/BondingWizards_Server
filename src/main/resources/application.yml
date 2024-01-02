@@ -28,3 +28,5 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
+chatgpt:
+  api-key: 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
