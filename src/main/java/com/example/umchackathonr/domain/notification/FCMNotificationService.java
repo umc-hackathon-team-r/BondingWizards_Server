@@ -1,5 +1,6 @@
 package com.example.umchackathonr.domain.notification;
 
+
 import com.example.umchackathonr.domain.Event.Event;
 import com.example.umchackathonr.domain.Event.EventRepository;
 import com.example.umchackathonr.domain.notification.dto.FCMNotificationRequestDto;

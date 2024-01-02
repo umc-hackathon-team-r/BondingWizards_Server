@@ -1,5 +1,6 @@
 package com.example.umchackathonr.domain.customEvent.dto;
 
+import com.example.umchackathonr.domain.Event.Event;
 import com.example.umchackathonr.domain.customEvent.CustomEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,27 +18,27 @@ public class CustomEventResponseDto {
     @Getter
     @Setter
     public static class ListEventResponseDto {
-        private List<EventResponseDto> data;
+        private List<CommonEventDto> data;
 
-        public static ListEventResponseDto from(List<CustomEvent> customEvents) {
-            List<EventResponseDto> eventResponseDtos = customEvents.stream()
-                    .map(EventResponseDto::from)
-                    .collect(Collectors.toList());
-
-            return new ListEventResponseDto(eventResponseDtos);
-        }
     }
+
 
     @NoArgsConstructor
     @AllArgsConstructor
     @Getter
     @Setter
-    public static class EventResponseDto {
+    public static class CommonEventDto{
+
         private String title;
 
-        public static EventResponseDto from(CustomEvent customEvent) {
-            return new EventResponseDto(customEvent.getTitle());
+        public static CommonEventDto fromCustomEvent(CustomEvent customEvent) {
+            return new CommonEventDto(customEvent.getTitle());
         }
+
+        public static CommonEventDto fromEvent(Event event) {
+            return new CommonEventDto(event.getTitle());
+        }
+
     }
 
 }
