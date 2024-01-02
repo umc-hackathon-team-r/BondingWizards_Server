@@ -23,11 +23,4 @@ public class Event extends BaseTimeEntity {
 
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "friend_id")
-    private Friend friend;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
 }
