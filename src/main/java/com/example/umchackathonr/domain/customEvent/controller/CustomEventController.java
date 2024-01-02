@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -16,8 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,46 +48,46 @@ public class CustomEventController {
         return ResponseEntity.ok(listCustomEvent);
     }
 
-    // 이벤트 상세 조회
+  // 이벤트 상세 조회
 
-    // 이벤트 수정
-    @PatchMapping("/api/event/{eventId}")
-    @Operation(summary = "이벤트 수정", description = "이벤트 정보를 수정합니다.")
-    @ApiResponse(responseCode = "201", description = "이벤트 수정 성공", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
-    })
-    @ApiResponse(responseCode = "403", description = "존재하지 않는 이벤트 ID입니다.")
-    @ApiResponse(responseCode = "500", description = "서버 내 오류")
-    public ResponseEntity<Map<String, String>> updateEvent(
-            @PathVariable Long eventId,
-            @Valid @RequestBody CustomEventRequestDto.updateCustomEventDto request) {
-        customEventService.update(request, eventId);
+  // 이벤트 수정
+  @PatchMapping("/api/event/{eventId}")
+  @Operation(summary = "이벤트 수정", description = "이벤트 정보를 수정합니다.")
+  @ApiResponse(responseCode = "201", description = "이벤트 수정 성공", content = {
+      @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+  })
+  @ApiResponse(responseCode = "403", description = "존재하지 않는 이벤트 ID입니다.")
+  @ApiResponse(responseCode = "500", description = "서버 내 오류")
+  public ResponseEntity<Map<String, String>> updateEvent(
+      @PathVariable Long eventId,
+      @Valid @RequestBody CustomEventRequestDto.updateCustomEventDto request) {
+    customEventService.update(request, eventId);
 
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "수정 완료");
+    Map<String, String> response = new HashMap<>();
+    response.put("message", "수정 완료");
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(response);
-    }
+    return ResponseEntity.status(HttpStatus.CREATED)
+        .body(response);
+  }
 
 
-    // 이벤트 삭제
-    @DeleteMapping("/api/event/{eventId}")
-    @Operation(summary = "이벤트 삭제", description = "이벤트 정보를 삭제합니다.")
-    @ApiResponse(responseCode = "201", description = "이벤트 삭제 성공", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
-    })
-    @ApiResponse(responseCode = "403", description = "존재하지 않는 이벤트 ID입니다.")
-    @ApiResponse(responseCode = "500", description = "서버 내 오류")
-    public ResponseEntity<Map<String, String>> deleteEvent(
-            @PathVariable Long eventId) {
+  // 이벤트 삭제
+  @DeleteMapping("/api/event/{eventId}")
+  @Operation(summary = "이벤트 삭제", description = "이벤트 정보를 삭제합니다.")
+  @ApiResponse(responseCode = "201", description = "이벤트 삭제 성공", content = {
+      @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+  })
+  @ApiResponse(responseCode = "403", description = "존재하지 않는 이벤트 ID입니다.")
+  @ApiResponse(responseCode = "500", description = "서버 내 오류")
+  public ResponseEntity<Map<String, String>> deleteEvent(
+      @PathVariable Long eventId) {
 
-        customEventService.delete(eventId);
+    customEventService.delete(eventId);
 
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "삭제 완료");
+    Map<String, String> response = new HashMap<>();
+    response.put("message", "삭제 완료");
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(response);
-    }
+    return ResponseEntity.status(HttpStatus.CREATED)
+        .body(response);
+  }
 }
