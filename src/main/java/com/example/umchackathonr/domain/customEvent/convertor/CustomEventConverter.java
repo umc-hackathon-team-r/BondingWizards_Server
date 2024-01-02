@@ -14,7 +14,6 @@ import java.util.List;
 @Component
 public class CustomEventConverter {
 
-
     public static CustomEvent toEntity(CustomEventRequestDto.creatCustomEventDto requestDto , Friend friend, User user) {
         return CustomEvent.builder()
                 .title(requestDto.getTitle())
@@ -25,6 +24,7 @@ public class CustomEventConverter {
                 .build();
     }
 
+
     public static CustomEventResponseDto.readCustomDto toReadCustomDto(CustomEvent customEvent, List<RecordPresentResponseDto.RecordPresentDto> recordPresents) {
         return CustomEventResponseDto.readCustomDto.builder()
                 .recordPresents(recordPresents)
@@ -33,4 +33,5 @@ public class CustomEventConverter {
                 .memo(customEvent.getMemo())
                 .build();
     }
+
 }
