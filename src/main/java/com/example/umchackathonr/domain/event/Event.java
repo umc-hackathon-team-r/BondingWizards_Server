@@ -17,11 +17,11 @@ public class Event extends BaseTimeEntity {
     @Column(name = "event_id")
     private Long id;
 
-
     private LocalDate date;
 
-
     private String title;
+
+    private String memo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "friend_id")
@@ -30,4 +30,6 @@ public class Event extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+
 }
