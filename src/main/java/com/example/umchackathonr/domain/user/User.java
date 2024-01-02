@@ -35,4 +35,4 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user")
     private List<UserEventNotification> userEventNotifications = new ArrayList<>();
-}
+  }
