@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class WritingRequestDto {
     private String goal;
-    private String propensity;
+    private List<String> propensity;
 }
