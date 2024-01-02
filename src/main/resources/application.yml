@@ -31,3 +31,5 @@ cloud:
       auto: false
 chatgpt:
   api-key: ${openai.api.key}
+fcm:
+  api-url :
