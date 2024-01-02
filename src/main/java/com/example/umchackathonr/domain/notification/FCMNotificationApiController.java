@@ -4,6 +4,7 @@ import com.example.umchackathonr.domain.notification.dto.FCMNotificationRequestD
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,7 @@ public class FCMNotificationApiController {
   @Operation(summary = "사용자 입력 푸시 알림", description = "사용자가 입력한 데이터를 기반으로 푸시 알림을 생성합니다")
   @ApiResponse(responseCode = "400", description = "User is inactive")
   @ApiResponse(responseCode = "500", description = "서버 내 오류")
-  public ResponseEntity<String> sendDailyNotificationByToken(@RequestBody FCMNotificationRequestDto requestDto){
+  public ResponseEntity<Map<String, String>> sendDailyNotificationByToken(@RequestBody FCMNotificationRequestDto requestDto){
     return fcmNotificationService.sendNotificationByToken(requestDto);
   }
 
