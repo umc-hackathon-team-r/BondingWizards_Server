@@ -28,11 +28,10 @@ public class User extends BaseTimeEntity {
     private List<Friend> friends = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-
     private List<CustomEvent> events = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
     private List<RecordPresent> recordPresents = new ArrayList<>();
-
 
     @OneToMany(mappedBy = "user")
     private List<UserEventNotification> userEventNotifications = new ArrayList<>();

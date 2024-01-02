@@ -14,7 +14,19 @@ public class CustomEventRequestDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class creatCustomEventDto{
+    public static class creatCustomEventDto {
+        private String title;
+        private LocalDate date;
+        private String memo;
+        private String target;
+
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class updateCustomEventDto {
         private String title;
         private LocalDate date;
         private String memo;

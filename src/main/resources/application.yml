@@ -31,4 +31,7 @@ cloud:
       auto: false
 chatgpt:
   api-key: ${openai.api.key}
+firebase:
+  server-key : AIzaSyAaa_daXtOkBQMpIiEZdUxw3d0dH_Yutno
+
 
