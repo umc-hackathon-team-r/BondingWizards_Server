@@ -1,6 +1,7 @@
 package com.example.umchackathonr.domain;
 
-import com.example.umchackathonr.domain.common.BaseEntity;
+
+import com.example.umchackathonr.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
