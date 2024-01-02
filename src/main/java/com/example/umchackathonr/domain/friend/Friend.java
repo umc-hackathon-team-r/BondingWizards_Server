@@ -5,7 +5,7 @@ import com.example.umchackathonr.domain.user.User;
 import com.example.umchackathonr.domain.event.Event;
 import com.example.umchackathonr.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,6 +13,9 @@ import java.util.List;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Friend extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +32,9 @@ public class Friend extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "friend", fetch = FetchType.LAZY)
     private List<Event> events = new ArrayList<>();
+
+    public void updateFriendInformation(String name, LocalDate birthday) {
+        this.name = name;
+        this.birthday = birthday;
+    }
 }
