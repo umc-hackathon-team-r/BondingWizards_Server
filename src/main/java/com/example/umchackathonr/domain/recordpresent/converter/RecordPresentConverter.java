@@ -1,6 +1,7 @@
 package com.example.umchackathonr.domain.recordpresent.converter;
 
 import com.example.umchackathonr.domain.recordpresent.RecordPresent;
+import com.example.umchackathonr.domain.recordpresent.dto.RecordPresentRequestDto;
 import com.example.umchackathonr.domain.recordpresent.dto.RecordPresentResponseDto;
 
 import java.util.ArrayList;
@@ -28,5 +29,18 @@ public class RecordPresentConverter {
         }
 
         return RecordPresentResponseDto.RecordPresentListDto.builder().recordPresentDto(recordPresentDtos).build();
+    }
+
+    public static RecordPresent toRecordPresent(RecordPresentRequestDto.RecordPresentAddReq recordReq) {
+
+
+        return RecordPresent.builder()
+                .name(recordReq.getName())
+                .picture(recordReq.getPicture())
+                .title(recordReq.getTitle())
+                .category(recordReq.getCategory())
+                .description(recordReq.getDescription())
+                .price(recordReq.getPrice()).build();
+
     }
 }
