@@ -3,6 +3,7 @@ package com.example.umchackathonr.domain.friend;
 
 import com.example.umchackathonr.domain.user.User;
 import com.example.umchackathonr.domain.customEvent.CustomEvent;
+import com.example.umchackathonr.domain.userEventNotification.NotificationFrequency;
 import com.example.umchackathonr.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,6 +26,9 @@ public class Friend extends BaseTimeEntity {
     private String name;
 
     private LocalDate birthday;
+
+    @Enumerated(EnumType.STRING)
+    private NotificationFrequency notificationFrequency;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

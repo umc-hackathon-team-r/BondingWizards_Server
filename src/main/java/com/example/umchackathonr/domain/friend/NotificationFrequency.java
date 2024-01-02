@@ -1,4 +1,4 @@
-package com.example.umchackathonr.domain.friendBirthday;
+package com.example.umchackathonr.domain.friend;
 
 
 public enum NotificationFrequency {

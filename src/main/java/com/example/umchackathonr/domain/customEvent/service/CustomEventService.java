@@ -32,14 +32,19 @@ public class CustomEventService {
 
     private final UserRepository userRepository;
 
-    public void creatCustomEvent(CustomEventRequestDto.creatCustomEventDto customEventRequestDto ,Long userId){
+    public void creatCustomEvent(CustomEventRequestDto.creatCustomEventDto customEventRequestDto, Long userId) {
         Friend friendByNameAndBirthday = friendRepository.findFriendByNameAndBirthday(customEventRequestDto.getTarget(), customEventRequestDto.getDate());
-        if(friendByNameAndBirthday.equals(null)){
-          // 여기에 친구가 없으면 친구를 생성하는 로직을 만들어주세요.
+
+        if (friendByNameAndBirthday == null) {
+            FriendRequest request = FriendRequest.builder()
+                    .name(customEventRequestDto.getTarget())
+                    .birthday(customEventRequestDto.getDate())
+                    .build();
+            friendService.save(userId, request);
         }
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_USER));
-        CustomEvent customEvent = customEventConverter.toEntity(customEventRequestDto,friendByNameAndBirthday,user);
+        CustomEvent customEvent = customEventConverter.toEntity(customEventRequestDto, friendByNameAndBirthday, user);
         customEventRepository.save(customEvent);
     }
 
