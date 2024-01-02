@@ -41,6 +41,9 @@ public class FCMNotificationService {
             .setBody(requestDto.getBody())
             .build();
 
+        System.out.println("Notification Title: " + requestDto.getTitle());   // 제목 출력
+        System.out.println("Notification Body: " + requestDto.getBody());
+
         Message message = Message.builder()
             .setToken(user.get().getFirebaseToken())
             .setNotification(notification)
