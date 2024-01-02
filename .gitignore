@@ -36,3 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 application-secreat.yml
+
+application-secret.yml
+umc-hackathon-firebase-adminsdk-dl9dr-cfab970bb6.json

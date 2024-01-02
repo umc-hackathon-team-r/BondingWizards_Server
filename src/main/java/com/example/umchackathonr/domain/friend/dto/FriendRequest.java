@@ -2,11 +2,13 @@ package com.example.umchackathonr.domain.friend.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
+@Builder
 public class FriendRequest {
 
     @Schema(description = "이름", example = "훈이")
