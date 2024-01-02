@@ -39,7 +39,7 @@ public class CustomEventService {
   private final EventRepository eventRepository;
 
 
-    public void creatCustomEvent(CustomEventRequestDto.creatCustomEventDto customEventRequestDto, Long userId) {
+    public Long creatCustomEvent(CustomEventRequestDto.creatCustomEventDto customEventRequestDto, Long userId) {
         Friend friendByNameAndBirthday = friendRepository.findFriendByNameAndBirthday(customEventRequestDto.getTarget(), customEventRequestDto.getDate());
 
         if (friendByNameAndBirthday == null) {
@@ -52,8 +52,9 @@ public class CustomEventService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_USER));
         CustomEvent customEvent = customEventConverter.toEntity(customEventRequestDto, friendByNameAndBirthday, user);
-        customEventRepository.save(customEvent);
-  }
+        CustomEvent saveCustomEvent = customEventRepository.save(customEvent);
+        return saveCustomEvent.getId();
+    }
 
     // 날짜별 이벤트 목록 조회
     public CustomEventResponseDto.ListEventResponseDto getListCustomEvent(LocalDate date, Long userId) {
@@ -78,9 +79,15 @@ public class CustomEventService {
     // 사용자 입력 이벤트와 자동 생성 Event 병합 코드
     public List<CustomEventResponseDto.CommonEventDto> mergeEvent(List<CustomEvent> customEvents, Event event) {
         List<CustomEventResponseDto.CommonEventDto> commonEventDtos = new ArrayList<>();
-        commonEventDtos.add(CustomEventResponseDto.CommonEventDto.fromEvent(event));
 
+        // Event가 null이 아닌 경우에만 추가
+        if (event != null) {
+            commonEventDtos.add(CustomEventResponseDto.CommonEventDto.fromEvent(event));
+        }
+
+        // CustomEvent 중 null이 아닌 것들을 CommonEventDto로 변환하여 추가
         List<CustomEventResponseDto.CommonEventDto> customEventDtos = customEvents.stream()
+                .filter(ce -> ce != null) // null인 CustomEvent는 필터링
                 .map(CustomEventResponseDto.CommonEventDto::fromCustomEvent)
                 .collect(Collectors.toList());
 
@@ -90,7 +97,8 @@ public class CustomEventService {
     }
 
 
-  // 이벤트 수정
+
+    // 이벤트 수정
   public void update(CustomEventRequestDto.updateCustomEventDto request, Long eventId) {
     CustomEvent customEvent = customEventRepository.findById(eventId)
         .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_EVENT));

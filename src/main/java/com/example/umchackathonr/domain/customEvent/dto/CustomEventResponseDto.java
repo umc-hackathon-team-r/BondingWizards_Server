@@ -2,10 +2,8 @@ package com.example.umchackathonr.domain.customEvent.dto;
 
 import com.example.umchackathonr.domain.Event.Event;
 import com.example.umchackathonr.domain.customEvent.CustomEvent;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,5 +38,13 @@ public class CustomEventResponseDto {
         }
 
     }
+
+    @Getter
+    @AllArgsConstructor
+    public static class CreateCustomEventResponse {
+        @Schema(description = "이벤트 ID", example = "1")
+        private Long eventId;
+    }
+
 
 }
