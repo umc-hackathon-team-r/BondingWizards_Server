@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,14 +55,23 @@ public class CustomEventService {
         customEventRepository.save(customEvent);
   }
 
-
-    public CustomEventResponseDto.ListEventResponseDto getListCustomEvent(LocalDate date) {
-        List<CustomEvent> customEvent = customEventRepository.findCustomEventByDate(date);
+    // 날짜별 이벤트 목록 조회
+    public CustomEventResponseDto.ListEventResponseDto getListCustomEvent(LocalDate date, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_USER));
+        List<CustomEvent> customEvent = customEventRepository.findCustomEventByDateAndUser(date,user);
         Event event = eventRepository.findEventByDate(date);
+
+        // 이벤트가 없을 경우
+        if (customEvent.isEmpty() && event == null) {
+            List<CustomEventResponseDto.CommonEventDto> noEventDto = Collections.singletonList(
+                    new CustomEventResponseDto.CommonEventDto("일정이 없습니다")
+            );
+            return new CustomEventResponseDto.ListEventResponseDto(noEventDto);
+        }
+
         mergeEvent(customEvent,event);
-
         List<CustomEventResponseDto.CommonEventDto> mergedEventDtos = mergeEvent(customEvent, event);
-
         return new CustomEventResponseDto.ListEventResponseDto(mergedEventDtos);
     }
 

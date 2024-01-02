@@ -44,7 +44,7 @@ public class CustomEventController {
     @Operation(summary = "이벤트 목록 조회 ", description = "모든 기념일을 조회합니다.")
     public ResponseEntity<?> getEventsByDate(
             @PathVariable("userId") Long userId, @RequestParam("date") LocalDate date) {
-        CustomEventResponseDto.ListEventResponseDto listCustomEvent = customEventService.getListCustomEvent(date);
+        CustomEventResponseDto.ListEventResponseDto listCustomEvent = customEventService.getListCustomEvent(date,userId);
         return ResponseEntity.ok(listCustomEvent);
     }
 
