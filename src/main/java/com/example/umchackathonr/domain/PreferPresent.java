@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 public class PreferPresent extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "prefer_present_id")
     private Long id;
 

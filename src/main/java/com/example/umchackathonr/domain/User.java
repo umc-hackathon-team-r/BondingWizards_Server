@@ -12,18 +12,18 @@ import java.util.List;
 @Getter
 public class User extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
     private String name;
 
     @OneToMany(mappedBy = "user")
-    List<Friend> friends = new ArrayList<>();
+    private List<Friend> friends = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    List<Event> events = new ArrayList<>();
+    private List<Event> events = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    List<RecordPresent> recordPresents = new ArrayList<>();
+    private List<RecordPresent> recordPresents = new ArrayList<>();
 }

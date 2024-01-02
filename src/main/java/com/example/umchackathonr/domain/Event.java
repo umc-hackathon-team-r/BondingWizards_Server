@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Getter
 public class Event extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_id")
     private Long id;
 

@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 public class Friend extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "friend_id")
     private Long id;
 
@@ -25,6 +25,6 @@ public class Friend extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "friend")
+    @OneToMany(mappedBy = "friend", fetch = FetchType.LAZY)
     private List<Event> events = new ArrayList<>();
 }

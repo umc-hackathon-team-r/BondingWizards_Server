@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 public class RecordPresent extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "record_present_id")
     private Long id;
 
@@ -33,6 +33,6 @@ public class RecordPresent extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "recordPresent")
+    @OneToMany(mappedBy = "recordPresent", fetch = FetchType.LAZY)
     private List<PreferPresent> preferPresents = new ArrayList<>();
 }
