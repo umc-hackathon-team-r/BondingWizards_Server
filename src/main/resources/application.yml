@@ -1,0 +1,19 @@
+# DB
+spring:
+  profiles:
+    include: local
+  datasource:
+    # RDS-mysql-db-test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://bondingwizards.cb2aqmcugu31.ap-northeast-2.rds.amazonaws.com:3306/BondingWizards
+    username: admin
+    password: Umcgozjxhs!!1
+  # JPA
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: create
+        show_sql: true
+        format_sql: true
+server:
+  port: 8080
