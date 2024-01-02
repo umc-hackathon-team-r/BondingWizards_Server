@@ -1,6 +1,8 @@
-package com.example.umchackathonr.domain;
+package com.example.umchackathonr.domain.recordpresent;
 
 
+import com.example.umchackathonr.domain.user.User;
+import com.example.umchackathonr.domain.preferpresent.PreferPresent;
 import com.example.umchackathonr.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
