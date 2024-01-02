@@ -29,6 +29,7 @@ public class CustomEventResponseDto {
     @Getter
     @Setter
     public static class ListEventResponseDto {
+        @Schema(description = "조회 목록")
         private List<CommonEventDto> data;
 
     }
@@ -40,6 +41,7 @@ public class CustomEventResponseDto {
     @Setter
     public static class CommonEventDto{
 
+        @Schema(description = "이벤트 제목", example = "유리의 생일")
         private String title;
 
         public static CommonEventDto fromCustomEvent(CustomEvent customEvent) {
