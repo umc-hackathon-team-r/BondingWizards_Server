@@ -7,7 +7,7 @@ import lombok.Getter;
 @Entity
 @Table(name = "prefer_present")
 @Getter
-public class PreferPresent extends BaseEntity {
+public class PreferPresent extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "prefer_present_id")

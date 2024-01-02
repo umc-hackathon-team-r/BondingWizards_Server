@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "record_present")
 @Getter
-public class RecordPresent extends BaseEntity {
+public class RecordPresent extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "record_present_id")

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
-public class Event extends BaseEntity {
+public class Event extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "event_id")

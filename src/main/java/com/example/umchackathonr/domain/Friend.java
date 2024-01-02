@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
-public class Friend extends BaseEntity  {
+public class Friend extends BaseTimeEntity  {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "friend_id")

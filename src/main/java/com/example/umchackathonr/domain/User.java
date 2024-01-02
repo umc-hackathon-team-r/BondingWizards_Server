@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Getter
-public class User extends BaseEntity {
+public class User extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
