@@ -1,8 +1,4 @@
 package com.example.umchackathonr.domain.event;
-
-
-import com.example.umchackathonr.domain.friend.Friend;
-import com.example.umchackathonr.domain.user.User;
 import com.example.umchackathonr.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
