@@ -23,4 +23,6 @@ public class Event extends BaseTimeEntity {
 
     private String title;
 
+    private String notification;
+
 }
