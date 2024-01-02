@@ -1,12 +1,17 @@
 package com.example.umchackathonr.domain.customEvent.controller;
 
+import com.example.umchackathonr.domain.customEvent.CustomEvent;
 import com.example.umchackathonr.domain.customEvent.dto.CustomEventRequestDto;
+import com.example.umchackathonr.domain.customEvent.dto.CustomEventResponseDto;
 import com.example.umchackathonr.domain.customEvent.service.CustomEventService;
+import com.example.umchackathonr.domain.recordpresent.RecordPresent;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,4 +38,11 @@ public class CustomEventController {
 
 
     // 이벤트 상세 조회
+    @GetMapping("/{userId}/event/{eventId}")
+    @Operation(summary = "이벤트 상세 조회 ", description = "이벤트를 단건으로 조회합니다.")
+    public ResponseEntity<CustomEventResponseDto.readCustomDto> readCustomEvent(@PathVariable Long userId, @PathVariable Long eventId){
+        CustomEventResponseDto.readCustomDto r = customEventService.readCustomEvent(userId ,eventId);
+        return ResponseEntity.ok(r);
+    }
+
 }
