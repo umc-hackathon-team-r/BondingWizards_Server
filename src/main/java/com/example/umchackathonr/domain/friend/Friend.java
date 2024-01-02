@@ -37,4 +37,7 @@ public class Friend extends BaseTimeEntity {
         this.name = name;
         this.birthday = birthday;
     }
+
 }
+
+

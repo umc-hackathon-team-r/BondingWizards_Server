@@ -5,14 +5,19 @@ import com.example.umchackathonr.domain.user.User;
 import com.example.umchackathonr.domain.preferpresent.PreferPresent;
 import com.example.umchackathonr.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "record_present")
 @Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class RecordPresent extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,4 +42,8 @@ public class RecordPresent extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "recordPresent", fetch = FetchType.LAZY)
     private List<PreferPresent> preferPresents = new ArrayList<>();
+
+    public void addUser(User user) {
+        this.user = user;
+    }
 }

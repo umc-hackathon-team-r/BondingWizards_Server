@@ -1,19 +1,18 @@
 package com.example.umchackathonr.domain.friend;
 
 
+import com.example.umchackathonr.domain.friend.dto.FriendDetailResponse;
 import com.example.umchackathonr.domain.friend.dto.FriendRequest;
+import com.example.umchackathonr.domain.friend.dto.FriendResponse;
 import com.example.umchackathonr.domain.user.User;
 import com.example.umchackathonr.domain.user.UserRepository;
 import com.example.umchackathonr.exception.errorCode.UserErrorCode;
 import com.example.umchackathonr.exception.exception.RestApiException;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Optional;
-
-import static com.amazonaws.services.ec2.model.PrincipalType.User;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -45,9 +44,7 @@ public class FriendService {
     }
 
     // 친구 수정
-    public void update(Long userId, FriendRequest request, Long friendId) {
-        userRepository.findById(userId)
-                .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_USER));
+    public void update(FriendRequest request, Long friendId) {
 
         Friend friend = friendRepository.findById(friendId)
                 .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_FRIEND));
@@ -57,13 +54,35 @@ public class FriendService {
     }
 
     // 친구 삭제
-    public void delete(Long userId, Long friendId) {
-        userRepository.findById(userId)
-                .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_USER));
+    public void delete(Long friendId) {
 
         friendRepository.findById(friendId)
                 .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_FRIEND));
 
         friendRepository.deleteById(friendId);
+    }
+
+    // 전체 조회
+    public List<Friend> findFriends(Long userId) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_USER));
+
+        return friendRepository.findAll();
+    }
+
+
+    // 상세 조회
+    public FriendDetailResponse findFriend(Long friendId) {
+
+        Friend findFriend = friendRepository.findById(friendId)
+                .orElseThrow(() -> new RestApiException(UserErrorCode.INACTIVE_FRIEND));
+
+        FriendDetailResponse friendDetailResponse = FriendDetailResponse.builder()
+                .friendId(findFriend.getId())
+                .friendName(findFriend.getName())
+                .birthday(findFriend.getBirthday())
+                .build();
+
+        return friendDetailResponse;
     }
 }
